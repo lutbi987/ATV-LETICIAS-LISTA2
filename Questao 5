@@ -1,0 +1,45 @@
+import json
+
+ARQUIVO_CONTATOS = 'contatos.json'
+
+contatos = []
+
+def salvar_contatos():
+    with open(ARQUIVO_CONTATOS, 'w') as f:
+        json.dump(contatos, f, indent=4)
+
+def adicionar_contatos(nome, telefone, email):
+    novo_contato = {
+        'nome': nome,
+        'telefone': telefone,
+        'email': email
+    }
+    contatos.append(novo_contato)
+    salvar_contatos()
+    print(f"Contato {nome} adicionado com sucesso!")
+def buscar_contatos(nome_pesquisado):
+    pesquisados = [x for x in contatos if nome_pesquisado.lower() in x['nome'].lower()]
+
+    if pesquisados:
+        for y, contato in enumerate(pesquisados, start=1):
+            print(f"{y}. Nome: {contato['nome']}, Telefone: {contato['telefone']}, Email: {contato['email']}")
+    else:
+        print("Nenhum contato encontrado.")
+
+while True:
+    print("1. Adicionar contato")
+    print("2. Buscar contato")
+    print("3. Sair")
+    opcao = input("Escolha uma opção: ")
+    if opcao == '1':
+        nome = input("Nome: ")
+        telefone = input("Telefone: ")
+        email = input("Email: ")
+        adicionar_contatos(nome, telefone, email)
+        print("Contato adicionado com sucesso!")
+    elif opcao == '2':
+        nome_pesquisado = input("Digite o nome do contato: ")
+        buscar_contatos(nome_pesquisado)
+        print("Contato encontrado!")
+    elif opcao == '3':
+        break
