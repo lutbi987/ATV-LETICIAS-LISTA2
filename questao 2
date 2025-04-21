@@ -1,0 +1,46 @@
+import json
+
+arquivo_estoque = 'estoque.json'
+estoque = []
+
+def salvar_estoque():
+    with open(arquivo_estoque, 'w') as estoque_arquivo:
+        json.dump(estoque, estoque_arquivo, indent= 4)
+        print("Tarefas salvas com sucesso!")
+def adicionar_estoque(produtos, quantidade, preco):
+    armazem = {
+        'produtos': produtos,
+        'quantidade': quantidade,
+        'preco': preco,
+    }
+    estoque.append(armazem)
+    salvar_estoque()
+def exibir_estoque():
+    for i, armazem in enumerate(estoque, start=1):
+        print(f"{i}. {armazem['produtos']} - {armazem['quantidade']} - {armazem['preco']}")
+
+def somar_estoque():
+    total = 0
+    for armazem in estoque:
+        total += armazem['quantidade']*armazem['preco']
+    print(f"O total do estoque é: {total}")
+    return total
+
+while True:
+    print("1. Adicionar produto")
+    print("2. Exibir estoque")
+    print("3. Somar estoque")
+    print("4. Sair")
+    opcao = input("Escolha uma opção: ")
+    if opcao == '1':
+        produtos = input("Digite o nome do produto: ")
+        quantidade = int(input("Digite a quantidade: "))
+        preco = float(input("Digite o preço: "))
+        adicionar_estoque(produtos, quantidade, preco)
+    elif opcao == '2':
+        exibir_estoque()  
+    elif opcao == '3':
+        somar_estoque()
+    elif opcao == '4':
+        print("Saindo do programa.")
+        break
